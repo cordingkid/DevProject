@@ -1,13 +1,23 @@
 package kr.or.ddit.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import kr.or.ddit.vo.Address;
+import kr.or.ddit.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class JSPHomeController {
+public class JSPHomeController<E> {
 	/*
 	  7장 : JSP
 	  
@@ -99,6 +109,117 @@ public class JSPHomeController {
 	       	||(or)				두 피연산자 중 하나 또는 모드 true이면 bool true를 반환하고 아니면 false반환
 	       	!(not)				해당 피연산자의 의미를 반대로 바꿈
 	 */
+	
+	@RequestMapping(value = "/home0101", method = RequestMethod.GET)
+	public String home0101(Model model) {
+		Member member = new Member();
+		member.setUserId("hong");
+		member.setPassword("123");
+		member.setEmail("aaa@naver.com");
+		member.setUserName("홀롤롤");
+
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, 2023);
+		cal.set(Calendar.MONTH, 10);
+		cal.set(Calendar.DAY_OF_MONTH, 7);
+		
+		member.setDateOfBirth(cal.getTime());
+		model.addAttribute(member);
+		return "home/home0101";
+	}
+	
+	@RequestMapping(value = "/home0102", method = RequestMethod.GET)
+	public String home0102(Model model) {
+		Member member = new Member();
+		
+		String[] hobbyArr = {"Music", "Movie"};
+		member.setHobbyArray(hobbyArr);
+		
+		List<String> list = new ArrayList<String>();
+		list.add("Music");
+		list.add("Movie");
+		member.setHobbyList(list);
+		
+		model.addAttribute(member);
+		return "home/home0102";
+	}
+	
+	@RequestMapping(value = "/home0103", method = RequestMethod.GET)
+	public String home0103(Model model) {
+		Member member = new Member();
+		
+		Address address = new Address();
+		address.setPostCode("090122");
+		address.setLocation("Incheon");
+		member.setAddress(address);
+		
+		model.addAttribute(member);
+		return "home/home0103";
+	}
+	
+	@RequestMapping(value = "/home0104", method = RequestMethod.GET)
+	public String home0104(Model model) {
+		Map<String, String> memberMap = new HashMap<String, String>();
+		
+		memberMap.put("id", "asd");
+		memberMap.put("pwd", "123");
+		memberMap.put("email", "asd@naver.com");
+		memberMap.put("name", "홍길동");
+		
+		// memberMap 이라는 키를 정확하게 명시 했기때문에 jsp 페이지에서 명시된 키로 데이터를 출력할수있다.
+		model.addAttribute("memberMap", memberMap);
+		return "home/home0104";
+	}
+	
+	@RequestMapping(value = "/home0201", method = RequestMethod.GET)
+	public String home0201(Model model) {
+		int coin = 100;
+		
+		
+		model.addAttribute("coin", coin);
+		return "home/home0201";
+	}
+	
+	@RequestMapping(value = "/home0202", method = RequestMethod.GET)
+	public String home0202(Model model) {
+		int coin = 1000;
+		
+		model.addAttribute("coin", coin);
+		return "home/home0202";
+	}
+	
+	@RequestMapping(value = "/home0203", method = RequestMethod.GET)
+	public String home0203(Model model) {
+		String userId = "asd";
+		model.addAttribute("userId", userId);
+		return "home/home0203";
+	}
+	
+	// empty 연산자 사용
+	@RequestMapping(value = "/home0301", method = RequestMethod.GET)
+	public String home0301(Model model) {
+		
+		return "home/home0301";
+	}
+	
+	@RequestMapping(value = "/home0302", method = RequestMethod.GET)
+	public String home0302(Model model) {
+		Member member = new Member();
+		model.addAttribute("member", member);
+		return "home/home0301";
+	}
+	
+	@RequestMapping(value = "/home0401", method = RequestMethod.GET)
+	public String home0401(Model model) {
+		int coin = 1000;
+		String userId = "hongkd";
+		
+		Member member = new Member();
+		model.addAttribute("member", member);
+		model.addAttribute("coin", coin);
+		model.addAttribute("userId", userId);
+		return "home/home0401";
+	}
 }
 
 
