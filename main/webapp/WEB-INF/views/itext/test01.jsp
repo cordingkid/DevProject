@@ -9,8 +9,7 @@
 <body>
 	<form action="" method="post">
 		<input type="text" name="userId" id="userId" placeholder="아이디"><br>
-		<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호"><br>
-		<input type="text" name="userName" id="userName" placeholder="이름"><br>
+		<input type="password" name="userPw" id="userPw" placeholder="비밀번호"><br>
 		<input type="submit" value="로그인">
 	</form>
 </body>

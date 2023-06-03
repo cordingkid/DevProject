@@ -37,13 +37,14 @@ $(function(){
 	
 	
 	pdf1Btn.on('click',function(){
-		$.ajax({
-			type : "post",
-			url : "/itext/download01",
-			success : function(res) {
-				alert(res);
-			}
-		});
+		location.href = "/itext/download01";
+// 		$.ajax({
+// 			type : "post",
+// 			url : "/itext/download01",
+// 			success : function(res) {
+// 				alert(res);
+// 			}
+// 		});
 	});
 	
 	pdf2Btn.on('click',function(){

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.ItextMapper">
+
+	<select id="login" parameterType="test" resultType="test">
+		select 
+			user_id, user_pw, user_name, grade, department,	rrn, no
+		from itextpdftest
+		where user_id = #{userId}
+		and user_pw = #{userPw}
+	</select>
+
+</mapper>
