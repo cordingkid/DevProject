@@ -67,6 +67,7 @@ public class FileUploadController01 {
 	 					> StandardServletMultipartResolver Bean 등록
 	 				> web.xml 에설정
 	 					> multipart-config (servlet 태그 안에 설정)
+	 					
 	 			2. CommonsMultipartResolver 사용시 설정( 우리가 사용할 방식임)**
 	 				> Commons Fileupload API를 이용한 Multipart File 데이터 처리
 	 				> bean 속성으로 maxUploadSize, maxInMemorySize, defaultEncoding 설정을 제공

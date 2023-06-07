@@ -48,7 +48,16 @@
 	
 	<context:component-scan base-package="kr.or.ddit" />
 	
+	<!-- 채팅 핸들러설정 -->
+	<beans:bean id="webSocketHandler" class="kr.or.ddit.handler.WebSocketHandler"/>
 	
+	<websocket:handlers>
+	<websocket:mapping handler="webSocketHandler" path="/websockettest"/>
+		<!-- 웹소켓 세션에 Http세션을 올려야 누군지 알수 있기 때문에 -->
+	    <websocket:handshake-interceptors>
+	   		<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+	    </websocket:handshake-interceptors>
+ 	</websocket:handlers>
 	
 </beans:beans>
 

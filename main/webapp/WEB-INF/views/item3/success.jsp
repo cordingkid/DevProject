@@ -7,9 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/websocket/test1.do" method="get">
-		<input type="text" name="name" placeholder="이름">
-		<input type="submit" value="채팅방 입장">
-	</form>
+	<h2>${msg }</h2>
+	<a href="/item3/list">List</a>
 </body>
 </html>

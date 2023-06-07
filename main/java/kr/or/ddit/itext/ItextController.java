@@ -186,5 +186,10 @@ public class ItextController {
 		}
 		return entity;
 	}
+	
+	@GetMapping("/viewer")
+	public String viewer() {
+		return "itext/viewer";
+	}
 
 }

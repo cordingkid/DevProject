@@ -17,23 +17,27 @@
     <script>
         var socket = new WebSocket("ws://localhost:80/websockettest");
 
+        
         socket.onopen = function() {
             console.log("WebSocket 연결 성공");
         };
 
+        
         socket.onmessage = function(event) {
             var receivedMessage = event.data;
-            console.log(event);
+//             console.log(event);
             console.log("받은 메시지: " + receivedMessage);
            
             // 받은 메시지를 채팅 박스에 추가합니다.
             $("#chatBox").append("<p>" + receivedMessage + "</p>");
         };
 
+        
         socket.onclose = function(event) {
             console.log("WebSocket 연결 종료");
         };
        
+        
         // 전송 버튼 클릭 시 메시지를 서버로 전송합니다.
         $("#sendButton").click(function() {
             var message = $("#messageInput").val();

@@ -26,4 +26,29 @@ public class ItemServiceImpl2 implements ItemService2 {
 		mapper.register(item);
 	}
 	
+	@Override
+	public Item2 read(int itemId) {
+		return mapper.read(itemId);
+	}
+	
+	@Override
+	public String getPicture(int itemId) {
+		return mapper.getPicture(itemId);
+	}
+	
+	@Override
+	public String getPicture2(int itemId) {
+		return mapper.getPicture2(itemId);
+	}
+	
+	@Override
+	public void modify(Item2 item) {
+		mapper.modify(item);
+	}
+	
+	@Override
+	public void remove(int itemId) {
+		mapper.remove(itemId);
+	}
+	
 }

@@ -19,7 +19,7 @@ public class WebSocketController {
 		return "chat/loginChat";
 	}
 	
-	@RequestMapping(value = "/test.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/test1.do", method = RequestMethod.GET)
 	public String websocketTest(String name, HttpSession session, Model model) {
 		String page = "";
 		log.info("이름 : " + name);

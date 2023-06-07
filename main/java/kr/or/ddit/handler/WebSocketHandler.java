@@ -1,7 +1,12 @@
 package kr.or.ddit.handler;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -14,17 +19,13 @@ import lombok.extern.slf4j.Slf4j;
 public class WebSocketHandler extends TextWebSocketHandler {
 
 	private List<WebSocketSession> sessions = new ArrayList<>();
-//	private Map<String, WebSocketSession> userMap = new HashMap<String, WebSocketSession>();
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-//		HttpSession httpSession = (HttpSession) session.getAttributes().get("HTTP_SESSION");
-		
-		
-//		log.info("누구? :" + (String)httpSession.getAttribute("name"));
-		// 클라이언트와의 연결이 성립될 때 호출되는 메서드
 		log.info("채팅방 입장");
 		sessions.add(session);
+		String name = getName(session);
+		sendMessageToAll(name + "님이 채팅방에 입장하였습니다.");
 	}
 
 	@Override
@@ -43,6 +44,22 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		// 클라이언트와의 연결이 종료될 때 호출되는 메서드
 		log.info("채팅방 아웃");
+		sendMessageToAll(getName(session) + "님이 채팅방을 퇴장하였습니다.");
 		sessions.remove(session);
+	}
+	
+	private void sendMessageToAll(String message) throws IOException {
+        for (WebSocketSession session : sessions) {
+            session.sendMessage(new TextMessage(message));
+        }
+    }
+
+	public String getName(WebSocketSession session) {
+		Map<String, Object> map = session.getAttributes();
+		String name = (String) map.get("name");
+		if(name == null) {
+			name = "비로그인 유저";
+		}
+		return name;
 	}
 }
