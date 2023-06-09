@@ -11,6 +11,14 @@
 	<definition name="notice/*" extends="mainTemplate">
 		<put-attribute name="content" value="/WEB-INF/views/noticeboard/{1}.jsp"/>
 	</definition>
+	
+	<definition name="loginTemplate" template="/WEB-INF/views/loginTemplate.jsp"></definition>
+	
+	<definition name="conn/*" extends="loginTemplate">
+		<put-attribute name="content" value="/WEB-INF/views/noticeboard/{1}.jsp"/>
+	</definition>
+	
+	
 	<!-- <definition name="*/*" extends="mainTemplate">
 		이렇게 매핑이 된다 '*' 가 {1}, {2}가
 		<put-attribute name="content" value="/WEB-INF/views/noticeboard/{1}/{2}.jsp"/>

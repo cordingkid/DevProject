@@ -26,7 +26,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card card-primary">
-				<form action="/notice/insert.do" method="post" id="noticeForm">
+				<form action="/notice/insert.do" method="post" id="noticeForm" enctype="multipart/form-data">
 					<c:if test="${status eq 'u' }">
 						<input type="hidden" name="boNo" id="boNo" value="${notice.boNo }">
 					</c:if>
@@ -47,61 +47,39 @@
 						</div>
 						<div class="form-group">
 							<div class="custom-file">
-								<label for="inputDescription">파일 선택</label> <input type="file"
-									class="custom-file-input" id="customFile"> <label
-									class="custom-file-label" for="customFile">파일을 선택해주세요</label>
+								<label for="inputDescription">파일 선택</label> 
+								<input type="file" class="custom-file-input" id="boFile" name="boFile" multiple> 
+								<label class="custom-file-label" for="boFile">파일을 선택해주세요</label>
 							</div>
 						</div>
 					</div>
-					<div class="card-footer bg-white">
-						<ul
-							class="mailbox-attachments d-flex align-items-stretch clearfix">
-							<li><span class="mailbox-attachment-icon"><i
-									class="far fa-file-pdf"></i></span>
-
-								<div class="mailbox-attachment-info">
-									<a href="#" class="mailbox-attachment-name"><i
-										class="fas fa-paperclip"></i> Sep2014-report.pdf</a> <span
-										class="mailbox-attachment-size clearfix mt-1"> <span>1,245
-											KB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
-											class="fas fa-times"></i></a>
-									</span>
-								</div></li>
-							<li><span class="mailbox-attachment-icon"><i
-									class="far fa-file-word"></i></span>
-
-								<div class="mailbox-attachment-info">
-									<a href="#" class="mailbox-attachment-name"><i
-										class="fas fa-paperclip"></i> App Description.docx</a> <span
-										class="mailbox-attachment-size clearfix mt-1"> <span>1,245
-											KB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
-											class="fas fa-times"></i></a>
-									</span>
-								</div></li>
-							<li><span class="mailbox-attachment-icon has-img"><img
-									src="../../dist/img/photo1.png" alt="Attachment"></span>
-
-								<div class="mailbox-attachment-info">
-									<a href="#" class="mailbox-attachment-name"><i
-										class="fas fa-camera"></i> photo1.png</a> <span
-										class="mailbox-attachment-size clearfix mt-1"> <span>2.67
-											MB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
-											class="fas fa-times"></i></a>
-									</span>
-								</div></li>
-							<li><span class="mailbox-attachment-icon has-img"><img
-									src="../../dist/img/photo2.png" alt="Attachment"></span>
-
-								<div class="mailbox-attachment-info">
-									<a href="#" class="mailbox-attachment-name"><i
-										class="fas fa-camera"></i> photo2.png</a> <span
-										class="mailbox-attachment-size clearfix mt-1"> <span>1.9
-											MB</span> <a href="#" class="btn btn-default btn-sm float-right"><i
-											class="fas fa-times"></i></a>
-									</span>
-								</div></li>
-						</ul>
-					</div>
+					<c:if test="${status eq 'u' }">
+						<div class="card-footer bg-white">
+							<ul class="mailbox-attachments d-flex align-items-stretch clearfix">
+								<c:if test="${not empty notice.noticeFileList }">
+									<c:forEach items="${notice.noticeFileList }" var="noticeFile">
+										<li>
+											<span class="mailbox-attachment-icon">
+												<i class="far fa-file-pdf"></i>
+											</span>
+											<div class="mailbox-attachment-info">
+												<a href="#" class="mailbox-attachment-name">
+													<i class="fas fa-paperclip"></i>
+													 ${noticeFile.fileName }
+												</a> 
+												<span class="mailbox-attachment-size clearfix mt-1"> 
+													<span>${noticeFile.fileFancysize }</span> 
+													<span class="btn btn-default btn-sm float-right attachmentFileDel" id="span_${noticeFile.fileNo }">
+														<i class="fas fa-times"></i>
+													</span>
+												</span>
+											</div>
+										</li>
+									</c:forEach>
+								</c:if>
+							</ul>
+						</div>
+					</c:if>
 					<div class="card-footer bg-white">
 						<div class="row">
 							<div class="col-12">
@@ -163,6 +141,17 @@ $(function(){
 	cancelBtn.on('click',function(){
 		let boNo = $('#boNo').val();
 		location.href = "/notice/detail.do?boNo=" + boNo;
+	});
+	
+	
+	// 파일 삭제 버튼 눌럿을때
+	$('.attachmentFileDel').on('click',function(){
+		let id = $(this).prop("id");
+		let idx = id.indexOf("_");
+		let noticeFileNo = id.substring(idx + 1); // fileNo 얻어오기
+		let ptrn = `<input type="hidden" name="delNoticeNo" value="%V">`;
+		noticeForm.append(ptrn.replace("%V", noticeFileNo));
+		$(this).parents("li:first").hide();
 	});
 });
 </script>
