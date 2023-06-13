@@ -37,14 +37,9 @@ $(function(){
 	
 	
 	pdf1Btn.on('click',function(){
-		location.href = "/itext/download01";
-// 		$.ajax({
-// 			type : "post",
-// 			url : "/itext/download01",
-// 			success : function(res) {
-// 				alert(res);
-// 			}
-// 		});
+// 		location.href = "/itext/download01";
+// 		window.onload("/itext/download01")
+		window.open("/itext/download01","재학증명서", "width=500, height=735, top=50, left=50");
 	});
 	
 	pdf2Btn.on('click',function(){

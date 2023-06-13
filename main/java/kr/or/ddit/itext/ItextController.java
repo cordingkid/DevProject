@@ -3,7 +3,6 @@ package kr.or.ddit.itext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -149,41 +148,42 @@ public class ItextController {
 		System.out.println("PDF 문서에 텍스트가 추가되었습니다.");
 		
 		// 파일 미리보기 코드
-		/*
-		 * HttpHeaders headers = new HttpHeaders(); InputStream in = null;
-		 * ResponseEntity<byte[]> entity = null; try { in = new
-		 * FileInputStream(outputFilePath);
-		 * headers.setContentType(MediaType.APPLICATION_PDF); entity = new
-		 * ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-		 * } catch (Exception e) { e.printStackTrace(); entity = new
-		 * ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST); }
-		 */
-		HttpHeaders headers = new HttpHeaders();
-		InputStream in = null;
-
-		try {
-			// 파일을 읽기 위해 FileInputStream을 생성합니다.
-			in = new FileInputStream(outputFilePath);
-
-			// 응답 헤더를 설정합니다.
-			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-			headers.add("Content-Disposition",
-					"attachment; filename=\"" + new String(pdfName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
-
-			// ResponseEntity를 사용하여 응답 본문과 헤더를 포함한 HTTP 응답을 생성합니다.
-			// IOUtils.toByteArray(in)를 사용하여 InputStream을 바이트 배열로 변환하여 응답 본문으로 설정합니다.
-			// HttpStatus.CREATED를 사용하여 상태 코드 201(CREATED)을 설정합니다.
-			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-		}catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
-		} finally {
-			try {
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		
+		HttpHeaders headers = new HttpHeaders(); InputStream in = null;
+//		ResponseEntity<byte[]> entity = null;
+		try { in = new
+		FileInputStream(outputFilePath);
+		headers.setContentType(MediaType.APPLICATION_PDF); entity = new
+		ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+		} catch (Exception e) { e.printStackTrace(); entity = new
+		ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST); }
+		
+//		HttpHeaders headers = new HttpHeaders();
+//		InputStream in = null;
+//
+//		try {
+//			// 파일을 읽기 위해 FileInputStream을 생성합니다.
+//			in = new FileInputStream(outputFilePath);
+//
+//			// 응답 헤더를 설정합니다.
+//			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//			headers.add("Content-Disposition",
+//					"attachment; filename=\"" + new String(pdfName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+//
+//			// ResponseEntity를 사용하여 응답 본문과 헤더를 포함한 HTTP 응답을 생성합니다.
+//			// IOUtils.toByteArray(in)를 사용하여 InputStream을 바이트 배열로 변환하여 응답 본문으로 설정합니다.
+//			// HttpStatus.CREATED를 사용하여 상태 코드 201(CREATED)을 설정합니다.
+//			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+//		} finally {
+//			try {
+//				in.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return entity;
 	}
 	
