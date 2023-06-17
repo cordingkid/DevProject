@@ -6,8 +6,8 @@
 		</div>
 		<div class="card-body">
 			<p class="login-box-msg">회원가입</p>
-			
-			<form action="/notice/signup.do" method="post" id="signupForm" enctype="multipart/form-data">
+			<!-- ${_csrf.parameterName }=${_csrf.token} 파일 데이터 보낼때 이거  -->
+			<form action="/notice/signup.do?${_csrf.parameterName }=${_csrf.token}" method="post" id="signupForm" enctype="multipart/form-data">
 				<div class="input-group mb-3 text-center">
 					<img class="profile-user-img img-fluid img-circle" id="profileImg"
 						src="/resources/dist/img/AdminLTELogo.png" alt="User profile picture"
@@ -127,6 +127,10 @@ $(function() {
 		$.ajax({
 			type : 'post',
 			url : '/notice/idCheck.do',
+			beforeSend : function(xhr) {
+				// 스프링 시큐리티를 할떄 비동기 동기 처리할떄 무조건 이걸 보내야 한다!!!!!!!!!!!!!
+				xhr.setRequestHeader('${_csrf.headerName}', '${_csrf.token}');				
+			},
 			data : {memId : id},
 			success : function(res) {
 				console.log("아이디 중복확인 이벤트 결과 : ", res);

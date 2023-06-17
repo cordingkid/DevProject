@@ -31,7 +31,7 @@ public class NoticeLoginController {
 	@Inject
 	private INoticeService noticeService;
 	
-	@RequestMapping(value = "login.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
 	public String noticeLogin(Model model) {
 		model.addAttribute("bodyText", "login-page");
 		return "conn/login";

@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +34,9 @@ public class NoticeServiceImpl implements INoticeService {
 	
 	@Inject
 	private ProfileMapper profileMapper;
+	
+	@Inject
+	private PasswordEncoder pe;
 
 //	TelegramSendController tst = new TelegramSendController();
 
@@ -188,8 +192,14 @@ public class NoticeServiceImpl implements INoticeService {
 		}
 		
 		memberVO.setMemProfileImg(profileImg);
+		
+		// 맴버 비밀번호 암호화 
+		memberVO.setMemPw(pe.encode(memberVO.getMemPw()));
+		
 		int status = loginMapper.signup(memberVO);
 		if (status > 0) {
+			// 권한 부여
+			loginMapper.signupAuth(memberVO.getMemNo());
 			res = ServiceResult.OK;
 		} else {
 			res = ServiceResult.FAILED;
@@ -262,8 +272,8 @@ public class NoticeServiceImpl implements INoticeService {
 	
 	
 	@Override
-	public DDITMemberVO selectMember(DDITMemberVO sessionMember) {
-		return profileMapper.selectMember(sessionMember);
+	public DDITMemberVO selectMember(String memId) {
+		return profileMapper.selectMember(memId);
 	}
 	
 	@Override

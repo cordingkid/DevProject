@@ -99,6 +99,9 @@ $(function() {
 		$.ajax({
 			type : 'post',
 			url : "/notice/idForget.do",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader('${_csrf.headerName}','${_csrf.token}');				
+			},
 			contentType : "application/json",
 			data : JSON.stringify(data),
 			success : function(res) {
@@ -140,6 +143,9 @@ $(function() {
 		$.ajax({
 			type : 'post',
 			url : "/notice/pwForget.do",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader('${_csrf.headerName}','${_csrf.token}');				
+			},
 			contentType : "application/json",
 			data : JSON.stringify(data),
 			success : function(res) {
